@@ -1,26 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Count} from './Count';
 
 const App: React.FC = () => {
+  const [text, setText] = React.useState('');
+  const [text2, setText2] = React.useState('');
+  const onOdd = React.useCallback(() => setText(''), [setText]);
+  const data = React.useMemo(() => ({isEven: text2.length % 2 === 0, text2}), [text2]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input value={text} onChange={e => setText(e.target.value)}/>
+      <input placeholder="text2" value={text2} onChange={e => setText2(e.target.value)}/>
+      <Count onOdd={onOdd} data={data}/>
     </div>
   );
-}
+};
 
 export default App;
